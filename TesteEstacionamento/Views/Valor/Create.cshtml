@@ -1,0 +1,48 @@
+﻿@model TesteEstacionamento.Models.ValorModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ValorModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InicioVigencia" class="control-label"></label>
+                <input type="date" asp-for="InicioVigencia" class="form-control" />
+                <span asp-validation-for="InicioVigencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TerminoVigencia" class="control-label"></label>
+                <input type="date" asp-for="TerminoVigencia" class="form-control" />
+                <span asp-validation-for="TerminoVigencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorInicial" class="control-label"></label>
+                <input asp-for="ValorInicial" class="form-control" />
+                <span asp-validation-for="ValorInicial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorAdicional" class="control-label"></label>
+                <input asp-for="ValorAdicional" class="form-control" />
+                <span asp-validation-for="ValorAdicional" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
