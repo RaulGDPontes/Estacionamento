@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TesteEstacionamento.Migrations
 {
-    public partial class inicial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace TesteEstacionamento.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Placa = table.Column<string>(nullable: true),
+                    Placa = table.Column<string>(nullable: false),
                     DataEntrada = table.Column<DateTime>(nullable: false),
                     HoraSaida = table.Column<DateTime>(nullable: false)
                 },
@@ -29,8 +29,8 @@ namespace TesteEstacionamento.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    InicioVigencia = table.Column<DateTime>(nullable: false),
-                    TerminoVigencia = table.Column<DateTime>(nullable: false),
+                    InicioVigencia = table.Column<string>(nullable: true),
+                    TerminoVigencia = table.Column<string>(nullable: true),
                     ValorInicial = table.Column<decimal>(nullable: false),
                     ValorAdicional = table.Column<decimal>(nullable: false)
                 },

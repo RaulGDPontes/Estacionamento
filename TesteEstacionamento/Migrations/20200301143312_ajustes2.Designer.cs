@@ -10,8 +10,8 @@ using TesteEstacionamento.Models;
 namespace TesteEstacionamento.Migrations
 {
     [DbContext(typeof(TesteEstacionamentoContext))]
-    [Migration("20200228165952_inicial")]
-    partial class inicial
+    [Migration("20200301143312_ajustes2")]
+    partial class ajustes2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,9 +29,12 @@ namespace TesteEstacionamento.Migrations
 
                     b.Property<DateTime>("DataEntrada");
 
-                    b.Property<DateTime>("HoraSaida");
+                    b.Property<DateTime>("DataSaida");
 
-                    b.Property<string>("Placa");
+                    b.Property<string>("Placa")
+                        .IsRequired();
+
+                    b.Property<string>("Valor");
 
                     b.HasKey("Id");
 
@@ -44,9 +47,9 @@ namespace TesteEstacionamento.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("InicioVigencia");
+                    b.Property<string>("InicioVigencia");
 
-                    b.Property<DateTime>("TerminoVigencia");
+                    b.Property<string>("TerminoVigencia");
 
                     b.Property<decimal>("ValorAdicional");
 

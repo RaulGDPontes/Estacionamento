@@ -10,20 +10,20 @@ namespace TesteEstacionamento.Models
     public class ValorModel
     {
         public int Id { get; set; }
-        [Display(Name = "Inicio da Vigencia")]
+        [Display(Name = "Inicio da Vigência")]
         public string InicioVigencia { get; set; }
 
-        [Display(Name = "Termino da Vigência")]
+        [Display(Name = "Término da Vigência")]
         public string TerminoVigencia { get; set; }
 
         [Display(Name = "Valor Inicial")]
         public decimal ValorInicial { get; set; }
 
         [Display(Name = "Valor Adicional")]
-
         public decimal ValorAdicional { get; set; }
 
         [NotMapped]
+        [Display(Name = "Inicio da Vigencia")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime InicioVigenciaDateTime
         {
@@ -34,6 +34,7 @@ namespace TesteEstacionamento.Models
         }
 
         [NotMapped]
+        [Display(Name = "Termino da Vigência")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime TerminoVigenciaDateTime
         {
@@ -56,5 +57,7 @@ namespace TesteEstacionamento.Models
                 return DateTime.MinValue;
             }
         }
+
+
     }
 }

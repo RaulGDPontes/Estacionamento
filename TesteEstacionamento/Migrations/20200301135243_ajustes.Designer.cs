@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TesteEstacionamento.Models;
 
 namespace TesteEstacionamento.Migrations
 {
     [DbContext(typeof(TesteEstacionamentoContext))]
-    partial class TesteEstacionamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20200301135243_ajustes")]
+    partial class ajustes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,6 @@ namespace TesteEstacionamento.Migrations
 
                     b.Property<string>("Placa")
                         .IsRequired();
-
-                    b.Property<string>("Valor");
 
                     b.HasKey("Id");
 

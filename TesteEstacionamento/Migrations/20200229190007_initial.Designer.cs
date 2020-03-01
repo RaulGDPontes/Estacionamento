@@ -10,8 +10,8 @@ using TesteEstacionamento.Models;
 namespace TesteEstacionamento.Migrations
 {
     [DbContext(typeof(TesteEstacionamentoContext))]
-    [Migration("20200228173920_inicial2")]
-    partial class inicial2
+    [Migration("20200229190007_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

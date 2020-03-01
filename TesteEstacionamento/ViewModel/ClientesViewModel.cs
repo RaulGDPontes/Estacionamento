@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TesteEstacionamento.ViewModel
 {
-    public class ValorViewModel
+    public class ClientesViewModel
     {
     }
 }

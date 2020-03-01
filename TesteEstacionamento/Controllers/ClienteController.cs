@@ -25,26 +25,36 @@ namespace TesteEstacionamento.Controllers
         }
 
         // GET: Cliente/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet]
+        public async Task<ClienteModel> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return null;
             }
 
             var clienteModel = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Id == id);
+            clienteModel.DataSaida = DateTime.Now;
+
             if (clienteModel == null)
             {
-                return NotFound();
+                return null;
+            }
+            else
+            {
+                clienteModel.CalcularValor(_context);
             }
 
-            return View(clienteModel);
+            return clienteModel;
         }
 
         // GET: Cliente/Create
+
         public IActionResult Create()
         {
+            var agora = (DateTime.Now).ToString("yyyy-MM-ddTHH:mm:ss");
+            ViewBag.dataAtual = agora;
             return View();
         }
 
@@ -52,67 +62,39 @@ namespace TesteEstacionamento.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Placa,DataEntrada,HoraSaida")] ClienteModel clienteModel)
+        //[ValidateAntiForgeryToken]
+        public bool Create(string pPlaca)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(clienteModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var cliente = new ClienteModel(pPlaca);
+                _context.Clientes.Add(cliente);
+                _context.SaveChanges();
+                return true;
             }
-            return View(clienteModel);
+            catch
+            {
+                return false;
+            }
         }
 
-        // GET: Cliente/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var clienteModel = await _context.Clientes.FindAsync(id);
-            if (clienteModel == null)
-            {
-                return NotFound();
-            }
-            return View(clienteModel);
-        }
-
-        // POST: Cliente/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Placa,DataEntrada,HoraSaida")] ClienteModel clienteModel)
+        //[ValidateAntiForgeryToken]
+        public bool MarcarSaida(string pPlaca)
         {
-            if (id != clienteModel.Id)
+            try
             {
-                return NotFound();
+                var cliente = _context.Clientes.Where(c => c.Placa == pPlaca).FirstOrDefault();
+                cliente.DataSaida = DateTime.Now;
+                cliente.CalcularValor(_context);
+                _context.Clientes.Update(cliente);
+                _context.SaveChanges();
+                return true;
             }
-
-            if (ModelState.IsValid)
+            catch
             {
-                try
-                {
-                    _context.Update(clienteModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClienteModelExists(clienteModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return false;
             }
-            return View(clienteModel);
         }
 
         // GET: Cliente/Delete/5

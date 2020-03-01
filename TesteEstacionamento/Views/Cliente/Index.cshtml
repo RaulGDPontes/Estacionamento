@@ -4,12 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" href="#" id="novaEntrada">Nova Entrada</a>
 </p>
-<table class="table">
+<h2>Veículos no Estacionamento</h2>
+<div class="col-md-12 row form-inline">
+    <div class="col-md-7"></div>
+    <label for="filtro" class="col-md-2">Buscar Placa:</label>
+    <input id="filtro" class="form-control col-md-3" type="text"/>
+    
+</div>
+<br />
+<table class="table estacionamentoAtivo">
     <thead>
         <tr>
             <th>
@@ -18,30 +25,148 @@
             <th>
                 @Html.DisplayNameFor(model => model.DataEntrada)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoraSaida)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Placa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraSaida)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {@if (item.DataSaida == DateTime.MinValue)
+            {
+                <tr id="@item.Id">
+                    <td id="placa">
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataEntrada)
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>*@
+                        <button class="btn btn-primary" id="btnMarcarSaida">Marcar Saída</button>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Deletar</a>
+                    </td>
+                </tr>
+            }
+    }
     </tbody>
 </table>
+
+<div id="wraperTableHistorico">
+    <h2>Histórico</h2>
+    <div class="col-md-12 row form-inline">
+        <div class="col-md-7"></div>
+        <label for="filtroHistorico" class="col-md-2">Buscar Placa:</label>
+        <input id="filtroHistorico" class="form-control col-md-3" type="text" />
+
+    </div>  
+    <br />
+    <table class="table tabelaHistorico">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Placa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataEntrada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataSaida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Valor)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {@if (item.DataSaida != DateTime.MinValue)
+                {
+                    <tr id="@item.Id">
+                        <td id="placa">
+                            @Html.DisplayFor(modelItem => item.Placa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataEntrada)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataSaida)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Valor)
+                        </td>
+                        <td>
+                            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Deletar</a>
+                        </td>
+                    </tr>
+                }
+        }
+        </tbody>
+    </table>
+</div>
+
+<div id="modalSaidaVeiculo" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar Saída</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <div class="row col-md-12 form-inline">
+                    <div class="form-group col-md-3">
+                        <label for="placaInputSaida">Placa:</label>
+                        <input readonly="readonly" type="text" class="form-control" id="placaInputSaida">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="entrada">Entrada:</label>
+                        <input readonly="readonly" type="datetime-local" class="form-control" id="entrada">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="saida">Saida:</label>
+                        <input readonly="readonly" type="datetime-local" class="form-control" id="saida">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="total">Total:</label>
+                        <input readonly="readonly" type="text" class="form-control" id="total">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnConfirmarSaida">Confirmar Saída</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="entradaVeiculo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Entrada de Veículo</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body ">
+                <div class="row col-md-12 form-inline">
+                    <div class="form-group col-md-3">
+                        <label for="text">Placa:</label>
+                        <input type="text" maxlength="7" class="form-control" id="placaEntrada">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnConfirmarEntrada">Confirmar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/indexCliente.js"></script>
+}
+
