@@ -12,8 +12,8 @@
 <div class="col-md-12 row form-inline">
     <div class="col-md-7"></div>
     <label for="filtro" class="col-md-2">Buscar Placa:</label>
-    <input id="filtro" class="form-control col-md-3" type="text"/>
-    
+    <input id="filtro" class="form-control col-md-3" type="text" />
+
 </div>
 <br />
 <table class="table estacionamentoAtivo">
@@ -58,7 +58,7 @@
         <label for="filtroHistorico" class="col-md-2">Buscar Placa:</label>
         <input id="filtroHistorico" class="form-control col-md-3" type="text" />
 
-    </div>  
+    </div>
     <br />
     <table class="table tabelaHistorico">
         <thead>
@@ -80,7 +80,8 @@
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {@if (item.DataSaida != DateTime.MinValue)
+            {
+                @if (item.DataSaida != DateTime.MinValue)
                 {
                     <tr id="@item.Id">
                         <td id="placa">
@@ -100,7 +101,7 @@
                         </td>
                     </tr>
                 }
-        }
+            }
         </tbody>
     </table>
 </div>
@@ -114,7 +115,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body ">
-                <div class="row col-md-12 form-inline">
+                <div class="row col-md-12">
                     <div class="form-group col-md-3">
                         <label for="placaInputSaida">Placa:</label>
                         <input readonly="readonly" type="text" class="form-control" id="placaInputSaida">
